@@ -211,19 +211,22 @@ def create_app(test_config=None):
     if category==0:
       questions_by_category = Question.query.all()
     else:  
-      questions_by_category = Question.query.filter(Question.category==category).all()
-    questions = [question.format() for question in questions_by_category]
-    if len(questions)==0:
-      abort(422)
-    else:  
-      unasked_questions=[]
-      for question in questions:
-        if question['id'] not in prev:
-          unasked_questions.append(question)
+      questions_by_category = Question.query.filter(Question.category==category).all() 
+    questions = [question.format() for question in questions_by_category] 
+    unasked_questions=[]
+    for question in questions:
+      if question['id'] not in prev:
+        unasked_questions.append(question)
+    if len(unasked_questions) == 0:
+      return jsonify({
+        'success':True,
+        'question':"none left"
+      })    
+    else: 
       #Choose a question randomly from questions list.    
       number = len(unasked_questions)
       question_num=random.randrange(number)
-      question=unasked_questions[question_num]
+      question=unasked_questions[question_num]   
       return jsonify({
         'success':True,
         'question':question

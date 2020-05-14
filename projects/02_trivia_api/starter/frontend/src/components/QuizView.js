@@ -66,7 +66,7 @@ class QuizView extends Component {
           previousQuestions: previousQuestions,
           currentQuestion: result.question,
           guess: '',
-          forceEnd: result.question ? false : true
+          forceEnd: result.question=="none left" ? true : false
         })
         return;
       },
@@ -124,7 +124,7 @@ class QuizView extends Component {
   renderFinalScore(){
     return(
       <div className="quiz-play-holder">
-        <div className="final-header"> Your Final Score is {this.state.numCorrect} out of {questionsPerPlay}</div>
+        <div className="final-header"> Your Final Score is {this.state.numCorrect} correct answers</div>
         <div className="play-again button" onClick={this.restartGame}> Play Again? </div>
       </div>
     )

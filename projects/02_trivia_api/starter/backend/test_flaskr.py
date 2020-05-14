@@ -126,13 +126,13 @@ class TriviaTestCase(unittest.TestCase):
         self.assertEqual(data['success'], True)
         self.assertEqual(data['question']['category'],2)
     
-    def test_422_play_with_wrong_category(self):
-        res = self.client().post('/search', json={'previous_questions': [], 'quiz_category':15})
+    def test_405_play_with_wrong_category(self):
+        res = self.client().get('/search', json={'previous_questions': [], 'quiz_category':2})
         data = json.loads(res.data)
 
-        self.assertEqual(res.status_code, 422)
+        self.assertEqual(res.status_code, 405)
         self.assertEqual(data['success'], False)
-        self.assertEqual(data['message'],'unprocessable')     
+        self.assertEqual(data['message'],'wrong method')     
              
     
 
