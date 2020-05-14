@@ -3,7 +3,7 @@ import $ from 'jquery';
 
 import '../stylesheets/QuizView.css';
 
-const questionsPerPlay = 5; 
+const questionsPerPlay = 4; 
 
 class QuizView extends Component {
   constructor(props){
@@ -54,7 +54,7 @@ class QuizView extends Component {
       contentType: 'application/json',
       data: JSON.stringify({
         previous_questions: previousQuestions,
-        quiz_category: this.state.quizCategory
+        quiz_category: this.state.quizCategory["id"]
       }),
       xhrFields: {
         withCredentials: true
@@ -124,7 +124,7 @@ class QuizView extends Component {
   renderFinalScore(){
     return(
       <div className="quiz-play-holder">
-        <div className="final-header"> Your Final Score is {this.state.numCorrect}</div>
+        <div className="final-header"> Your Final Score is {this.state.numCorrect} out of {questionsPerPlay}</div>
         <div className="play-again button" onClick={this.restartGame}> Play Again? </div>
       </div>
     )
@@ -133,6 +133,7 @@ class QuizView extends Component {
   evaluateAnswer = () => {
     const formatGuess = this.state.guess.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"").toLowerCase()
     const answerArray = this.state.currentQuestion.answer.toLowerCase().split(' ');
+    console.log(answerArray)
     return answerArray.includes(formatGuess)
   }
 
